@@ -16,6 +16,7 @@ namespace ShoppingCart
             private int quantity;
             private int buyQuantity;
             private int getFreeQuantity;
+            private decimal discount;
 
             //Getters&Setters
             public string Name
@@ -42,6 +43,11 @@ namespace ShoppingCart
             {
                 get { return getFreeQuantity; }
                 set { getFreeQuantity = value; }
+            }
+            public decimal Discount
+            {
+                get { return discount; }
+                set { discount = value; }
             }
         }
 
@@ -122,6 +128,13 @@ namespace ShoppingCart
                         int remainingItems = item.Quantity % (item.BuyQuantity + item.GetFreeQuantity);
                         decimal itemDiscount = (setsOfBuyGet * item.GetFreeQuantity * item.Price) + (remainingItems * item.Price * (discountPercentage / 100));
 
+                        if (item.Discount > 0)
+                        {
+                            int eligibleItems = item.Quantity / 2;
+                            decimal itemBuyOneGetDiscount = eligibleItems * item.Price * (item.Discount / 100);
+                            itemDiscount += itemBuyOneGetDiscount;
+                        }
+
                         totalDiscount += itemDiscount;
                         roundedtotalDiscount = Decimal.Round(totalDiscount, 2);
                     }
@@ -140,6 +153,7 @@ namespace ShoppingCart
             ShoppingCart cart3 = new ShoppingCart(salesTaxRate);
             ShoppingCart cart4 = new ShoppingCart(salesTaxRate);
             ShoppingCart cart4i = new ShoppingCart(salesTaxRate);
+            ShoppingCart cart5 = new ShoppingCart(salesTaxRate);
 
             //STEP 1:
             Console.WriteLine("Step 1: \n");
@@ -282,6 +296,30 @@ namespace ShoppingCart
             Console.WriteLine($"- Total Discount: {totalDiscount4ii}");
             Console.WriteLine($"- Total Tax: {totalTax4ii}\n");
 
+            //================================================================================//
+
+            //Step 5:
+            Console.WriteLine("Step 5: ");
+
+            Product doveSoap5 = new Product
+            {
+                Name = "Dove Soap",
+                Price = 39.99m,
+                Quantity = 2,
+                BuyQuantity = 1,
+                Discount = 50
+            };
+            //Add Items
+            cart5.Items.Add(doveSoap5);
+            //Calculations
+            decimal totalPrice5 = cart5.CalculateTotalPrice();
+            decimal totalDiscount5 = cart5.CalculateTotalDiscount();
+            decimal totalTax5 = cart5.CalculateSalesTaxDP();
+
+            Console.WriteLine("Shopping Cart:");
+            Console.WriteLine($"- Total Price: {(totalPrice5 - totalDiscount5) + totalTax5}");
+            Console.WriteLine($"- Total Discount: {totalDiscount5}");
+            Console.WriteLine($"- Total Tax: {totalTax5}\n");
 
             //================================================================================//
 

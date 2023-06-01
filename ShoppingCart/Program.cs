@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart
 {
-    internal class Program
-    {
+    
         public class Product
         {
             //Members
@@ -173,7 +172,8 @@ namespace ShoppingCart
                 return roundedglobalDiscount;
             }
         }
-        
+    internal class Program
+    {
         static void Main(string[] args)
         {
             decimal salesTaxRate = 0.125m;

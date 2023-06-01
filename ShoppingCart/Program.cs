@@ -71,6 +71,7 @@ namespace ShoppingCart
         static void Main(string[] args)
         {
             ShoppingCart cart1 = new ShoppingCart();
+            ShoppingCart cart2 = new ShoppingCart();
 
             //STEP 1:
             Console.WriteLine("Step 1: \n");
@@ -88,6 +89,32 @@ namespace ShoppingCart
 
             Console.WriteLine("Shopping Cart:");
             Console.WriteLine($"- Total Price: {totalPrice1}\n");
+
+            //================================================================================//
+
+            //STEP 2:
+            Console.WriteLine("Step 2: \n");
+            //Create Product
+            Product doveSoap2 = new Product
+            {
+                Name = "Dove Soap",
+                Price = 39.99m,
+                Quantity = 5
+            };
+            Product doveSoap2i = new Product
+            {
+                Name = "Dove Soap",
+                Price = 39.99m,
+                Quantity = 3
+            };
+            //Add Items
+            cart2.Items.Add(doveSoap2);
+            cart2.Items.Add(doveSoap2i);
+            //Calculations
+            decimal totalPrice2 = cart2.CalculateTotalPrice();
+
+            Console.WriteLine("Shopping Cart:");
+            Console.WriteLine($"- Total Price: {totalPrice2}\n");
 
             //================================================================================//
 

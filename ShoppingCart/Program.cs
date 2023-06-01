@@ -146,8 +146,7 @@ namespace ShoppingCart
                     if (!(item.Quantity > 0 && item.BuyQuantity <= 0 && item.GetFreeQuantity <= 0))
                     {
                         int setsOfBuyGet = item.Quantity / (item.BuyQuantity + item.GetFreeQuantity);
-                        int remainingItems = item.Quantity % (item.BuyQuantity + item.GetFreeQuantity);
-                        decimal itemDiscount = (setsOfBuyGet * item.GetFreeQuantity * item.Price) + (remainingItems * item.Price * (discountPercentage / 100));
+                        decimal itemDiscount = (setsOfBuyGet * item.GetFreeQuantity * item.Price);
 
                         if (item.Discount > 0)
                         {

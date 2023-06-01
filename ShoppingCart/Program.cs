@@ -57,6 +57,7 @@ namespace ShoppingCart
             private List<Product> items;
             private decimal salesTaxRate;
             private decimal discountPercentage;
+            private decimal discountThreshold;
 
             //Getters&Setters
             public List<Product> Items
@@ -74,6 +75,11 @@ namespace ShoppingCart
                 get { return discountPercentage; }
                 set { discountPercentage = value; }
             }
+            public decimal DiscountThreshold
+            {
+                get { return discountThreshold; }
+                set { discountThreshold = value; }
+            }
 
             //Constructors
             public ShoppingCart()
@@ -83,6 +89,13 @@ namespace ShoppingCart
             public ShoppingCart(decimal salesTaxRate)
             {
                 this.SalesTaxRate = salesTaxRate;
+                Items = new List<Product>();
+            }
+            public ShoppingCart(decimal salesTaxRate, decimal discountThreshold, decimal discountPercentage)
+            {
+                this.SalesTaxRate = salesTaxRate;
+                this.DiscountThreshold = discountThreshold;
+                this.DiscountPercentage = discountPercentage;
                 Items = new List<Product>();
             }
 
@@ -107,11 +120,20 @@ namespace ShoppingCart
                 decimal roundedtotalTax = Decimal.Round(totalTax, 2);
                 return roundedtotalTax;
             }
-            public decimal CalculateSalesTaxDP()//sale tax for totalprice - discount price (not just the total price)
+            public decimal CalculateSalesTaxDP()//sale tax for totalprice - discountprice (not just the total price)
             {
                 decimal totalPrice = CalculateTotalPrice();
                 decimal totalDiscount = CalculateTotalDiscount();
                 decimal discountedPrice = totalPrice - totalDiscount;
+                decimal totalTax = discountedPrice * salesTaxRate;
+                decimal roundedtotalTax = Decimal.Round(totalTax, 2);
+                return roundedtotalTax;
+            }
+            public decimal CalculateSalesTaxGD()//sale tax for total price - globalDiscount(GD)
+            {
+                decimal totalPrice = CalculateTotalPrice();
+                decimal totalglobalDiscount = CalculateGlobalDiscount();
+                decimal discountedPrice = totalPrice - totalglobalDiscount;
                 decimal totalTax = discountedPrice * salesTaxRate;
                 decimal roundedtotalTax = Decimal.Round(totalTax, 2);
                 return roundedtotalTax;
@@ -142,11 +164,21 @@ namespace ShoppingCart
 
                 return roundedtotalDiscount;
             }
+            public decimal CalculateGlobalDiscount()
+            {
+                decimal totalPrice = CalculateTotalPrice();
+                decimal globalDiscount = (totalPrice * discountPercentage) / 100;
+                decimal roundedglobalDiscount = Decimal.Round(globalDiscount, 2);
+
+                return roundedglobalDiscount;
+            }
         }
         
         static void Main(string[] args)
         {
             decimal salesTaxRate = 0.125m;
+            decimal discountThreshold = 500;
+            decimal discountPercentage = 20;
 
             ShoppingCart cart1 = new ShoppingCart();
             ShoppingCart cart2 = new ShoppingCart();
@@ -154,6 +186,8 @@ namespace ShoppingCart
             ShoppingCart cart4 = new ShoppingCart(salesTaxRate);
             ShoppingCart cart4i = new ShoppingCart(salesTaxRate);
             ShoppingCart cart5 = new ShoppingCart(salesTaxRate);
+            ShoppingCart cart6 = new ShoppingCart(salesTaxRate, discountThreshold, discountPercentage);
+
 
             //STEP 1:
             Console.WriteLine("Step 1: \n");
@@ -322,6 +356,34 @@ namespace ShoppingCart
             Console.WriteLine($"- Total Tax: {totalTax5}\n");
 
             //================================================================================//
+
+            //Step 6
+            Console.WriteLine("Step 6: ");
+
+            Product doveSoap6 = new Product
+            {
+                Name = "Dove Soap",
+                Price = 39.99m,
+                Quantity = 5
+            };
+            Product axeDeo6 = new Product
+            {
+                Name = "Dove Soap",
+                Price = 89.99m,
+                Quantity = 4
+            };
+            //Add Items
+            cart6.Items.Add(doveSoap6);
+            cart6.Items.Add(axeDeo6);
+            //Calculations
+            decimal totalPrice6 = cart6.CalculateTotalPrice();
+            decimal totalglobalDiscount6 = cart6.CalculateGlobalDiscount();
+            decimal totalTax6 = cart6.CalculateSalesTaxGD();
+
+            Console.WriteLine("Shopping Cart:");
+            Console.WriteLine($"- Total Price: {(totalPrice6 - totalglobalDiscount6) + totalTax6}");
+            Console.WriteLine($"- Total Discount: {totalglobalDiscount6}");
+            Console.WriteLine($"- Total Tax: {totalTax6}\n");
 
             Console.ReadLine();
         }

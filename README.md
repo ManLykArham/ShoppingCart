@@ -18,7 +18,7 @@ The project follows **Object-Oriented Programming (OOP)** principles, ensuring m
 
 ## 🏆 Achievements
 
-In this project, I had the opportunity to apply **OOP principles** such as encapsulation and modular design, which helped me create clean and scalable code. Most exciting for me was learning about **unit testing** and how to implement the **Arrange-Act-Assert pattern** to ensure that each functionality worked as intended. Discovering the value of automated tests—being able to validate the system’s functionality in real-time—was an incredible learning moment that reinforced the importance of thorough testing in software development.
+In this project, I had the opportunity to apply **OOP principles** such as encapsulation and modular design, which helped me create clean and scalable code. Most exciting for me was learning about **unit testing** and how to implement the **Arrange-Act-Assert pattern** to ensure that each functionality worked as intended. Discovering the value of automated testsbeing able to validate the system’s functionality in real-time was an incredible learning moment that reinforced the importance of thorough testing in software development.
 
 ---
 
